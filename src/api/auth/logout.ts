@@ -1,6 +1,6 @@
 "use server";
 
-import { LOGIN_URL, SESSION_COOKIE } from "@/modules/login/configuration/constraints";
+import { LOGIN_URL, SESSION_COOKIE } from "@modules/login/configuration/constraints";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 

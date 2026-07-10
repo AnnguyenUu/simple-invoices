@@ -1,4 +1,4 @@
-import LoginPresentation from "../../modules/login/presentation";
+import LoginPresentation from "@modules/login/presentation";
 
 export default function LoginPage() {
   return (

@@ -6,7 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as Form from "@radix-ui/react-form";
 import { Button, Callout, Card, Flex, Heading, Text, TextField } from "@radix-ui/themes";
 import { InputPassword } from "@/libs/input-password";
-import { login, LoginState } from "@/modules/login/repository/login";
+import { login, LoginState } from "@modules/login/repository/login";
 import { loginSchema, LoginValues } from "@/shared/server-constract/login";
 
 const initialState: LoginState = {};

@@ -4,7 +4,7 @@ import { Box } from "@radix-ui/themes";
 import {
   LOGIN_URL,
   SESSION_COOKIE,
-} from "@/modules/login/configuration/constraints";
+} from "@modules/login/configuration/constraints";
 import { ProtectedHeader } from "./protected-header";
 
 export default async function ProtectedLayout({
