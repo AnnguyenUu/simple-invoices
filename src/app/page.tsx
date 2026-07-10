@@ -1,6 +1,5 @@
 import { logout } from "@/api/auth/logout";
-import { SESSION_COOKIE } from "@/variables/constant";
-import { LOGIN_URL } from "@/variables/pages-url";
+import { LOGIN_URL, SESSION_COOKIE } from "@/modules/login/configuration/constraints";
 import { Button, Flex, Text } from "@radix-ui/themes";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";

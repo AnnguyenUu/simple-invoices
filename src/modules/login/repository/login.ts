@@ -2,7 +2,8 @@
 
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { RequestBuilder } from "@api/http/request-builder";import { SESSION_COOKIE } from "@/variables/constant";
+import { RequestBuilder } from "@api/http/request-builder";
+import { SESSION_COOKIE } from "../configuration/constraints";
 
 export type LoginState = {
   error?: string;

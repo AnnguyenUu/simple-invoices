@@ -1,29 +1,18 @@
 "use client";
 
-import { startTransition, useActionState, useState } from "react";
+import { startTransition, useActionState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as Form from "@radix-ui/react-form";
-import { EyeOpenIcon, EyeClosedIcon } from "@radix-ui/react-icons";
-import {
-  Button,
-  Callout,
-  Card,
-  Flex,
-  Heading,
-  IconButton,
-  Text,
-  TextField,
-} from "@radix-ui/themes";
-import { login, LoginState } from "@/api/auth/login";
-import { loginSchema, LoginValues } from "@/shared/login";
+import { Button, Callout, Card, Flex, Heading, Text, TextField } from "@radix-ui/themes";
+import { InputPassword } from "@/libs/input-password";
+import { login, LoginState } from "@/modules/login/repository/login";
+import { loginSchema, LoginValues } from "@/shared/server-constract/login";
 
 const initialState: LoginState = {};
 
-export function LoginForm() {
+function LoginForm() {
   const [state, formAction, pending] = useActionState(login, initialState);
-  
-  const [showPassword, setShowPassword] = useState(false);
 
   const {
     register,
@@ -80,27 +69,11 @@ export function LoginForm() {
                 </Text>
               </Form.Label>
               <Form.Control asChild>
-                <TextField.Root
-                  type={showPassword ? "text" : "password"}
+                <InputPassword
                   autoComplete="current-password"
                   color={errors.password ? "red" : undefined}
                   {...register("password")}
-                >
-                  <TextField.Slot side="right">
-                    <IconButton
-                      type="button"
-                      size="1"
-                      variant="ghost"
-                      color="gray"
-                      onClick={() => setShowPassword((v) => !v)}
-                      aria-label={
-                        showPassword ? "Hide password" : "Show password"
-                      }
-                    >
-                      {showPassword ? <EyeClosedIcon /> : <EyeOpenIcon />}
-                    </IconButton>
-                  </TextField.Slot>
-                </TextField.Root>
+                />
               </Form.Control>
               {errors.password ? (
                 <Text as="p" size="1" color="red">
@@ -124,5 +97,18 @@ export function LoginForm() {
         </Flex>
       </Form.Root>
     </Card>
+  );
+}
+
+
+export default function LoginPresentation() {
+  return (
+    <Flex
+      align="center"
+      justify="center"
+      style={{ minHeight: "100vh", padding: "2rem" }}
+    >
+      <LoginForm />
+    </Flex>
   );
 }
