@@ -1,0 +1,30 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//Applications/**)",
+      "Bash(npx --yes playwright --version)",
+      "Bash(node /private/tmp/claude-501/-Users-annguyenuu-Documents-invoice/cc81bb90-05f4-4423-81a2-8830334b2a58/scratchpad/test-login.mjs)",
+      "Bash(node test-login.mjs)",
+      "Bash(pkill -f \"next dev\")",
+      "Bash(jobs)",
+      "Bash(ps -p 52799 -o pid,command)",
+      "Bash(kill 52799)",
+      "Bash(pkill -f \"next-server\")",
+      "Bash(pkill -f \"npm run dev\")",
+      "Bash(python3 -c ' *)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:3000/login)",
+      "Bash(kill 81549 81559)",
+      "Bash(node verify.mjs)",
+      "Bash(node shot.mjs)",
+      "Bash(xargs cat)",
+      "Bash(xargs -I{} sh -c 'echo {}; cat {}')",
+      "Bash(node shot3.mjs)",
+      "Bash(gh repo *)",
+      "Bash(git check-ignore *)",
+      "Bash(git commit -m ' *)"
+    ],
+    "additionalDirectories": [
+      "/tmp"
+    ]
+  }
+}

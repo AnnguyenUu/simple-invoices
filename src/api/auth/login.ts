@@ -2,8 +2,7 @@
 
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { RequestBuilder } from "@api/http/request-builder";
-import { SESSION_COOKIE } from "./session";
+import { RequestBuilder } from "@api/http/request-builder";import { SESSION_COOKIE } from "@/variables/constant";
 
 export type LoginState = {
   error?: string;
@@ -72,10 +71,4 @@ export async function login(
   });
 
   redirect("/");
-}
-
-export async function logout() {
-  const cookieStore = await cookies();
-  cookieStore.delete(SESSION_COOKIE);
-  redirect("/login");
 }

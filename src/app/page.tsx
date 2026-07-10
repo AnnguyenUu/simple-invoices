@@ -1,15 +1,16 @@
+import { logout } from "@/api/auth/logout";
+import { SESSION_COOKIE } from "@/variables/constant";
+import { LOGIN_URL } from "@/variables/pages-url";
 import { Button, Flex, Text } from "@radix-ui/themes";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { logout } from "./login/actions";
-import { SESSION_COOKIE } from "./login/session";
 
 export default async function Home() {
   const cookieStore = await cookies();
   const session = cookieStore.get(SESSION_COOKIE);
 
   if (!session) {
-    redirect("/login");
+    redirect(LOGIN_URL);
   }
 
   return (
