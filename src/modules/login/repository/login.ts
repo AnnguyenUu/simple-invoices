@@ -3,7 +3,7 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { RequestBuilder } from "@api/http/request-builder";
-import { SESSION_COOKIE } from "../configuration/constraints";
+import { GRAND_TYPE, SCOPE, SESSION_COOKIE } from "../configuration/constraints";
 
 export type LoginState = {
   error?: string;
@@ -21,16 +21,18 @@ async function fetchToken(
   password: string
 ): Promise<TokenResponse | null> {
   const body = new URLSearchParams({
-    grant_type: "password",
     client_id: process.env.IDENTITY_CLIENT_ID!,
     client_secret: process.env.IDENTITY_CLIENT_SECRET!,
-    scope: "openid",
+    grant_type: GRAND_TYPE,
+    scope: SCOPE,
     username,
     password,
   });
 
+  const request = new RequestBuilder<TokenResponse>()
+
   try {
-    return await new RequestBuilder<TokenResponse>()
+    return await request
       .withMethod("post")
       .withUrl(`${process.env.IDENTITY_SERVER_URL}/oauth2/token`)
       .withHeaders({ "Content-Type": "application/x-www-form-urlencoded" })
