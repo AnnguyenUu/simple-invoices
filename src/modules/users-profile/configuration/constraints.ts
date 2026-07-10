@@ -1,0 +1,1 @@
+export const ORG_COOKIE = "_uctx_ort"

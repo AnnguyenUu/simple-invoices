@@ -65,6 +65,7 @@ export async function login(
   }
 
   const cookieStore = await cookies();
+  
   cookieStore.set(SESSION_COOKIE, token.access_token, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",

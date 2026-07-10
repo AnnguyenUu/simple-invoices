@@ -6,6 +6,12 @@ export type HttpMethod = "get" | "post" | "put" | "patch" | "delete";
 
 export class RequestBuilder<T = unknown> extends ErrorRequest {
   private config: AxiosRequestConfig = {};
+  private redirectOn401 = true;
+
+  withRedirectOn401(enabled: boolean): this {
+    this.redirectOn401 = enabled;
+    return this;
+  }
 
   withMethod(method: HttpMethod): this {
     this.config.method = method;
@@ -37,7 +43,7 @@ export class RequestBuilder<T = unknown> extends ErrorRequest {
       const { data } = await apiClient.request<T>(this.config);
       return data;
     } catch (error) {
-      this.handleError(error);
+      this.handleError(error, this.redirectOn401);
     }
   }
 }
