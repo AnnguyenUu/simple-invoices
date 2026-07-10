@@ -26,7 +26,7 @@ const LoginFormItems = ({ loading, state, errors, register }: Props) => {
         <Flex direction="column" gap="1">
           <Form.Label asChild>
             <Text as="label" size="2" weight="medium">
-              Email or phone number
+              Username
             </Text>
           </Form.Label>
           <Form.Control asChild>
@@ -34,6 +34,7 @@ const LoginFormItems = ({ loading, state, errors, register }: Props) => {
               type="text"
               autoComplete="username"
               color={errors.username ? "red" : undefined}
+              placeholder="Enter"
               {...register("username")}
             />
           </Form.Control>
@@ -56,6 +57,7 @@ const LoginFormItems = ({ loading, state, errors, register }: Props) => {
             <InputPassword
               autoComplete="current-password"
               color={errors.password ? "red" : undefined}
+              placeholder="Enter"
               {...register("password")}
             />
           </Form.Control>

@@ -22,7 +22,8 @@
       "Bash(gh repo *)",
       "Bash(git check-ignore *)",
       "Bash(git commit -m ' *)",
-      "Bash(cd /Users/annguyenuu/Documents/invoice *)"
+      "Bash(cd /Users/annguyenuu/Documents/invoice *)",
+      "Bash(awk 'NR>=4390 && NR<=4470' /Users/annguyenuu/Documents/invoice/node_modules/@radix-ui/themes/styles.css)"
     ],
     "additionalDirectories": [
       "/tmp"

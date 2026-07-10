@@ -9,7 +9,7 @@ import {
   Text,
 } from "@radix-ui/themes";
 import { login, LoginState } from "@modules/login/repository/login";
-import { useLoginForm } from "../core/handle/useLoginForm";
+import { useLoginForm } from "../core/handler/useLoginForm";
 import LoginFormItems from "./LoginFormItems";
 
 const initialState: LoginState = {};
@@ -29,10 +29,10 @@ function LoginForm() {
   return (
     <Card size="4" style={{ width: 380 }}>
       <Heading as="h1" size="5" mb="1">
-        Sign in
+        SIGN IN
       </Heading>
       <Text as="p" size="2" color="gray" mb="5">
-        Use your email or phone number to continue.
+      Enter your credentials to access your account.
       </Text>
 
       <Form.Root onSubmit={onSubmit}>
