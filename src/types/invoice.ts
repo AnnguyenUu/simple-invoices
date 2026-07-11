@@ -82,3 +82,74 @@ export type InvoiceListParams = {
   status?: InvoiceStatus;
   keyword?: string;
 };
+
+// Request contract for POST /invoice-service/1.0.0/invoices, from the
+// sample in src/hooks/create_invice.md — trimmed to the fields the create
+// form actually collects. `documents` (needs a file-upload flow) and the
+// free-form `customFields` (arbitrary key/value, no fixed schema) are
+// deliberately left out; everything else in the sample is covered.
+export type CreateInvoiceBankAccount = {
+  bankId?: string;
+  sortCode?: string;
+  accountNumber?: string;
+  accountName?: string;
+};
+
+export type CreateInvoiceAddress = {
+  premise?: string;
+  countryCode?: string;
+  postcode?: string;
+  county?: string;
+  city?: string;
+  addressType: "BILLING";
+};
+
+export type CreateInvoiceCustomer = {
+  firstName: string;
+  lastName: string;
+  contact: {
+    email: string;
+    mobileNumber: string;
+  };
+  addresses?: CreateInvoiceAddress[];
+};
+
+// One "tax" (ADD) and/or one "discount" (DEDUCT) entry — the sample shows
+// exactly this pair; an open-ended extensions list isn't exposed in the UI.
+export type CreateInvoiceExtension = {
+  addDeduct: "ADD" | "DEDUCT";
+  type: "PERCENTAGE" | "FIXED_VALUE";
+  value: number;
+  name: "tax" | "discount";
+};
+
+export type CreateInvoiceItem = {
+  // Confirmed required by the live API (400s with "itemReference must not
+  // be blank" otherwise) — not obvious from the sample alone.
+  itemReference: string;
+  itemName: string;
+  description?: string;
+  quantity: number;
+  rate: number;
+  itemUOM?: string;
+};
+
+export type CreateInvoiceRequest = {
+  bankAccount?: CreateInvoiceBankAccount;
+  invoiceNumber: string;
+  invoiceReference?: string;
+  currency: string;
+  invoiceDate: string; // YYYY-MM-DD
+  dueDate: string; // YYYY-MM-DD
+  description?: string;
+  extensions?: CreateInvoiceExtension[];
+  customer: CreateInvoiceCustomer;
+  // Spec requires exactly one line item per invoice.
+  items: [CreateInvoiceItem];
+};
+
+// The API accepts a batch (`invoices: [...]`) — this app only ever sends
+// a single invoice per submission.
+export type CreateInvoicesPayload = {
+  invoices: [CreateInvoiceRequest];
+};

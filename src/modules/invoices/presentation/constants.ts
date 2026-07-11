@@ -13,6 +13,9 @@ export const STATUS_FILTER_OPTIONS: { value: InvoiceStatus | "ALL"; label: strin
   { value: "Paid", label: "Paid" },
 ];
 
+// Observed across existing invoices — not an exhaustive list from the API.
+export const CURRENCY_OPTIONS = ["GBP", "USD", "EUR", "LKR", "SGD"];
+
 export const INVOICE_COLUMNS: { field: InvoiceSortField; label: string }[] = [
   { field: "INVOICE_NUMBER", label: "Invoice #" },
   { field: "STATUS", label: "Status" },

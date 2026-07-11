@@ -1,5 +1,9 @@
 import { RequestBuilder } from "@/api/http/request-builder";
-import type { InvoiceListParams, InvoiceListResponse } from "@/types/invoice";
+import type {
+  CreateInvoiceRequest,
+  InvoiceListParams,
+  InvoiceListResponse,
+} from "@/types/invoice";
 
 // Drop unset optional filters (fromDate/toDate/status/keyword) instead of
 // sending them as "" — an empty string is a value the API would filter on,
@@ -23,5 +27,14 @@ export function fetchInvoices(
     .withMethod("get")
     .withUrl("/invoices")
     .withParams(compact(params))
+    .send();
+}
+
+export function createInvoice(invoice: CreateInvoiceRequest): Promise<unknown> {
+  return new RequestBuilder<unknown>()
+    .withRedirectOn401(false)
+    .withMethod("post")
+    .withUrl("/invoices")
+    .withData({ invoices: [invoice] })
     .send();
 }

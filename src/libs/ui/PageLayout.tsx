@@ -9,7 +9,7 @@ export function PageLayout({
   children: ReactNode;
 }) {
   return (
-    <Box>
+    <Box className="max-w-[1600px] m-auto">
       <Heading as="h1" size="6" mb="4">
         {title}
       </Heading>

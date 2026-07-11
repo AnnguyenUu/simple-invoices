@@ -62,7 +62,15 @@
       "Bash(node verify-pagelayout.mjs)",
       "Bash(node verify-badge.mjs)",
       "Bash(node zoom-badge.mjs)",
-      "Bash(node zoom-badge2.mjs)"
+      "Bash(node zoom-badge2.mjs)",
+      "Bash(lsof -ti:3001)",
+      "Bash(curl -sf http://localhost:3001/login)",
+      "Bash(node create-invoice-test.mjs)",
+      "Bash(rm -f /private/tmp/claude-501/-Users-annguyenuu-Documents-invoice/b0bd499f-54a6-40e6-aee2-bd16ee57d403/scratchpad/*.mjs*)",
+      "Bash(node create-invoice-full.mjs)",
+      "Bash(sed -i.bak2 '/bankId.*test-bank-id/d' create-invoice-full.mjs)",
+      "Bash(node verify-validation.mjs)",
+      "Bash(node verify-valid.mjs)"
     ],
     "additionalDirectories": [
       "/tmp"

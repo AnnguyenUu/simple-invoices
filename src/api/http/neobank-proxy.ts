@@ -12,13 +12,22 @@ type ProxyOptions<T> = {
   method?: HttpMethod;
   token?: NeobankAuthToken;
   data?: unknown;
+  // Extra headers merged in on top of Authorization/org-token/Content-Type
+  // — e.g. invoice-service's required `Operation-Mode: SYNC`.
+  headers?: Record<string, string>;
   onSuccess?: (data: T) => unknown | Promise<unknown>;
 };
 
 export async function proxyToNeobank<T = unknown>(
   request: NextRequest,
   path: string,
-  { method = "get", token = "session", data, onSuccess }: ProxyOptions<T> = {}
+  {
+    method = "get",
+    token = "session",
+    data,
+    headers: extraHeaders,
+    onSuccess,
+  }: ProxyOptions<T> = {}
 ): Promise<NextResponse> {
   const cookieStore = await cookies();
   const sessionCookie = cookieStore.get(SESSION_COOKIE);
@@ -30,6 +39,7 @@ export async function proxyToNeobank<T = unknown>(
   const headers: Record<string, string> = {
     Authorization: `Bearer ${sessionCookie.value}`,
     "Content-Type": "application/json",
+    ...extraHeaders,
   };
 
   if (token === "org") {
