@@ -1,6 +1,15 @@
 import { RequestBuilder } from "@/api/http/request-builder";
 import type { InvoiceListParams, InvoiceListResponse } from "@/types/invoice";
 
+// Drop unset optional filters (fromDate/toDate/status/keyword) instead of
+// sending them as "" — an empty string is a value the API would filter on,
+// not "no filter".
+function compact(params: InvoiceListParams): Record<string, unknown> {
+  return Object.fromEntries(
+    Object.entries(params).filter(([, value]) => value !== undefined && value !== "")
+  );
+}
+
 export function fetchInvoices(
   params: InvoiceListParams
 ): Promise<InvoiceListResponse> {
@@ -13,6 +22,6 @@ export function fetchInvoices(
     .withRedirectOn401(false)
     .withMethod("get")
     .withUrl("/invoices")
-    .withParams(params)
+    .withParams(compact(params))
     .send();
 }

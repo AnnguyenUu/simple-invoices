@@ -57,7 +57,8 @@
       "Bash(node jump-test.mjs)",
       "Bash(node verify-split.mjs)",
       "Bash(node verify-spinner.mjs)",
-      "Bash(node verify-status-colors.mjs)"
+      "Bash(node verify-status-colors.mjs)",
+      "Bash(node verify-filters.mjs)"
     ],
     "additionalDirectories": [
       "/tmp"

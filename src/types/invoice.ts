@@ -66,9 +66,19 @@ export type InvoiceSortField =
 
 export type InvoiceOrdering = "ASCENDING" | "DESCENDING";
 
+// Observed values so far (Due, Overdue, Paid) — same set used for the
+// status badge colors in presentation/format.ts.
+export type InvoiceStatus = "Due" | "Overdue" | "Paid";
+
 export type InvoiceListParams = {
   sortBy: InvoiceSortField;
   ordering: InvoiceOrdering;
   pageNum: number;
   pageSize: number;
+  // Optional filters — omitted from the request entirely when unset
+  // (see fetchInvoices' compact()) rather than sent as "".
+  fromDate?: string; // YYYY-MM-DD
+  toDate?: string; // YYYY-MM-DD
+  status?: InvoiceStatus;
+  keyword?: string;
 };
