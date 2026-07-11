@@ -25,6 +25,7 @@ export function InvoicesFilters({
   const [keywordDraft, setKeywordDraft] = useState(value.keyword);
 
   const debounced = useDebounceCallback(onChange, 500);
+  
   const onChangeTextField = (
     e: ChangeEvent<HTMLInputElement, HTMLInputElement>,
   ) => {
