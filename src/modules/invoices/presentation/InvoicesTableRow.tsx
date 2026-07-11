@@ -7,7 +7,10 @@ export function InvoicesTableRow({ invoice }: { invoice: Invoice }) {
     <Table.Row>
       <Table.Cell>{invoice.invoiceNumber}</Table.Cell>
       <Table.Cell>
-        <Badge color={statusColor(invoice.status)}>
+        <Badge
+          color={statusColor(invoice.status)}
+          style={{ width: 76, justifyContent: "center" }}
+        >
           {statusLabel(invoice.status)}
         </Badge>
       </Table.Cell>

@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { ChangeEvent, startTransition, useEffect, useState } from "react";
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import { Flex, Select, TextField } from "@radix-ui/themes";
 import type { InvoiceStatus } from "@/types/invoice";
 import { PAGE_SIZE_OPTIONS, STATUS_FILTER_OPTIONS } from "./constants";
+import { useDebounceCallback } from "@/hooks/useDebounce";
 
 export type InvoiceFiltersValue = {
   keyword: string;
@@ -21,31 +22,25 @@ export function InvoicesFilters({
   value: InvoiceFiltersValue;
   onChange: (next: InvoiceFiltersValue) => void;
 }) {
-  // Local text so typing doesn't refetch on every keystroke — committed to
-  // the real filter value after a short pause.
   const [keywordDraft, setKeywordDraft] = useState(value.keyword);
 
-  useEffect(() => {
-    setKeywordDraft(value.keyword);
-  }, [value.keyword]);
+  const debounced = useDebounceCallback(onChange, 500);
+  const onChangeTextField = (
+    e: ChangeEvent<HTMLInputElement, HTMLInputElement>,
+  ) => {
+    setKeywordDraft(e.target.value);
 
-  useEffect(() => {
-    if (keywordDraft === value.keyword) return;
-    const timeout = setTimeout(() => {
-      onChange({ ...value, keyword: keywordDraft });
-    }, 400);
-    return () => clearTimeout(timeout);
-    // Only re-run when the draft changes — including `value`/`onChange`
-    // would reset the debounce timer on every parent re-render.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [keywordDraft]);
+    startTransition(() => {
+      debounced({ ...value, keyword: e.target.value });
+    });
+  };
 
   return (
     <Flex align="end" gap="3" wrap="wrap" mb="4">
       <TextField.Root
         placeholder="Search invoice #..."
         value={keywordDraft}
-        onChange={(e) => setKeywordDraft(e.target.value)}
+        onChange={onChangeTextField}
         style={{ width: 220 }}
       >
         <TextField.Slot>

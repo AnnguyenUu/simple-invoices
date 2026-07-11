@@ -58,7 +58,11 @@
       "Bash(node verify-split.mjs)",
       "Bash(node verify-spinner.mjs)",
       "Bash(node verify-status-colors.mjs)",
-      "Bash(node verify-filters.mjs)"
+      "Bash(node verify-filters.mjs)",
+      "Bash(node verify-pagelayout.mjs)",
+      "Bash(node verify-badge.mjs)",
+      "Bash(node zoom-badge.mjs)",
+      "Bash(node zoom-badge2.mjs)"
     ],
     "additionalDirectories": [
       "/tmp"
