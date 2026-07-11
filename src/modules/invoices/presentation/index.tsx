@@ -41,10 +41,7 @@ export function InvoicesTable() {
       </Callout.Root>
     );
   }
-
-  // True first load, nothing on screen yet — no prior layout to preserve,
-  // so a simple centered spinner is fine here (unlike the blur overlay
-  // below, which exists specifically to avoid disturbing existing layout).
+  
   if (isLoading) {
     return (
       <Flex align="center" justify="center" py="8">
