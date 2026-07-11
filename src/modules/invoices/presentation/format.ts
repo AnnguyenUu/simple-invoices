@@ -1,3 +1,5 @@
+import type { BadgeProps } from "@radix-ui/themes";
+
 export function formatAmount(amount: number, currency: string) {
   try {
     return new Intl.NumberFormat("en-US", {
@@ -19,4 +21,20 @@ export function formatDate(value: string) {
 export function statusLabel(status: { key: string; value: boolean }[]) {
   const active = status.filter((flag) => flag.value).map((flag) => flag.key);
   return active.length > 0 ? active.join(", ") : "—";
+}
+
+// Keys observed so far: Due, Overdue, Paid — mapped to their usual
+// semantic colors. Anything unrecognized (or no active flag) falls back to
+// gray rather than guessing.
+const STATUS_COLORS: Record<string, BadgeProps["color"]> = {
+  Paid: "green",
+  Due: "amber",
+  Overdue: "red",
+};
+
+export function statusColor(
+  status: { key: string; value: boolean }[]
+): BadgeProps["color"] {
+  const active = status.find((flag) => flag.value)?.key;
+  return (active && STATUS_COLORS[active]) || "gray";
 }

@@ -55,7 +55,9 @@
       "Bash(rm -f /private/tmp/claude-501/-Users-annguyenuu-Documents-invoice/b0bd499f-54a6-40e6-aee2-bd16ee57d403/scratchpad/*.mjs)",
       "Bash(rm -f /private/tmp/claude-501/-Users-annguyenuu-Documents-invoice/b0bd499f-54a6-40e6-aee2-bd16ee57d403/scratchpad/*.json)",
       "Bash(node jump-test.mjs)",
-      "Bash(node verify-split.mjs)"
+      "Bash(node verify-split.mjs)",
+      "Bash(node verify-spinner.mjs)",
+      "Bash(node verify-status-colors.mjs)"
     ],
     "additionalDirectories": [
       "/tmp"
