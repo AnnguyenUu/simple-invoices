@@ -106,17 +106,7 @@ export function CreateInvoiceForm() {
       </Card>
 
       {!isMobile && (
-        <Box
-          style={{
-            position: "fixed",
-            bottom: 0,
-            left: 0,
-            right: 0,
-            zIndex: 10,
-            backgroundColor: "var(--color-panel-solid)",
-            borderTop: "1px solid var(--gray-a5)",
-          }}
-        >
+        <Box className="fixed bottom-0 left-0 right-0 z-10 bg-[var(--color-panel-solid)] border-t border-[var(--gray-a5)]">
           <Flex justify="between" align="center" px="6" py="4">
             <Button variant="soft" color="gray" size="3" asChild>
               <Link href="/">Cancel</Link>

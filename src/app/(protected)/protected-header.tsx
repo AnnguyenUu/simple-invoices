@@ -43,13 +43,6 @@ export function ProtectedHeader() {
             <Button variant="soft" size="2" asChild>
               <Link href="/">Invoices</Link>
             </Button>
-            {/* Redundant with the primary CTA on the right once that's
-                visible — hidden below sm to save space on narrow screens. */}
-            <Box display={{ initial: "none", sm: "inline-block" }}>
-              <Button variant="ghost" color="gray" size="2" asChild>
-                <Link href="/invoices/new">New Invoice</Link>
-              </Button>
-            </Box>
           </Flex>
         </Flex>
 
