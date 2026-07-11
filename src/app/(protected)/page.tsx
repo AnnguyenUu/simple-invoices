@@ -1,3 +1,5 @@
+import { InvoicesTable } from "@/modules/invoices/presentation";
+
 export default function Home() {
-  return <span>Hello world</span>;
+  return <InvoicesTable />;
 }
