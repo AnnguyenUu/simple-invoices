@@ -8,8 +8,6 @@ export function useCreateInvoice() {
   return useMutation({
     mutationFn: createInvoice,
     onSuccess: () => {
-      // Any cached invoice list pages are now stale — refetch on next view
-      // instead of manually patching them in.
       queryClient.invalidateQueries({ queryKey: invoiceQueryKeys.all });
     },
   });

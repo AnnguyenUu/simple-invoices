@@ -12,8 +12,6 @@ type ProxyOptions<T> = {
   method?: HttpMethod;
   token?: NeobankAuthToken;
   data?: unknown;
-  // Extra headers merged in on top of Authorization/org-token/Content-Type
-  // — e.g. invoice-service's required `Operation-Mode: SYNC`.
   headers?: Record<string, string>;
   onSuccess?: (data: T) => unknown | Promise<unknown>;
 };

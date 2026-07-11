@@ -86,7 +86,6 @@ export type User = {
   roles: UserRole[];
 };
 
-// Raw envelope returned by GET /membership-service/1.0.0/users/me.
 export type UserResponse = {
   data: User;
 };

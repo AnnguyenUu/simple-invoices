@@ -29,9 +29,6 @@ function Field({
   name: string;
   label: string;
   error?: string;
-  // Select doesn't render a real form input Form.Control can merge props
-  // onto, so it's placed outside the asChild wrapper — see the currency
-  // field below.
   asControl?: boolean;
   children: ReactNode;
 }) {

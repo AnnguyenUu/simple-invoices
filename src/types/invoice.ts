@@ -16,7 +16,6 @@ export type InvoiceCustomField = {
   value: string;
 };
 
-// Verified against a real GET /invoice-service/1.0.0/invoices response.
 export type Invoice = {
   invoiceId: string;
   invoiceNumber: string;
@@ -44,8 +43,6 @@ export type Invoice = {
   customFields: InvoiceCustomField[];
 };
 
-// The envelope uses "paging", not "pagination", and has no totalPages —
-// compute it from totalRecords/pageSize.
 export type InvoiceListResponse = {
   data: Invoice[];
   paging: {
@@ -55,8 +52,6 @@ export type InvoiceListResponse = {
   };
 };
 
-// Only CREATED_DATE is confirmed against the real API (from the URL this
-// was built from) — the rest are unverified guesses.
 export type InvoiceSortField =
   | "CREATED_DATE"
   | "DUE_DATE"
@@ -66,8 +61,6 @@ export type InvoiceSortField =
 
 export type InvoiceOrdering = "ASCENDING" | "DESCENDING";
 
-// Observed values so far (Due, Overdue, Paid) — same set used for the
-// status badge colors in presentation/format.ts.
 export type InvoiceStatus = "Due" | "Overdue" | "Paid";
 
 export type InvoiceListParams = {
@@ -75,19 +68,12 @@ export type InvoiceListParams = {
   ordering: InvoiceOrdering;
   pageNum: number;
   pageSize: number;
-  // Optional filters — omitted from the request entirely when unset
-  // (see fetchInvoices' compact()) rather than sent as "".
   fromDate?: string; // YYYY-MM-DD
   toDate?: string; // YYYY-MM-DD
   status?: InvoiceStatus;
   keyword?: string;
 };
 
-// Request contract for POST /invoice-service/1.0.0/invoices, from the
-// sample in src/hooks/create_invice.md — trimmed to the fields the create
-// form actually collects. `documents` (needs a file-upload flow) and the
-// free-form `customFields` (arbitrary key/value, no fixed schema) are
-// deliberately left out; everything else in the sample is covered.
 export type CreateInvoiceBankAccount = {
   bankId?: string;
   sortCode?: string;
@@ -114,8 +100,6 @@ export type CreateInvoiceCustomer = {
   addresses?: CreateInvoiceAddress[];
 };
 
-// One "tax" (ADD) and/or one "discount" (DEDUCT) entry — the sample shows
-// exactly this pair; an open-ended extensions list isn't exposed in the UI.
 export type CreateInvoiceExtension = {
   addDeduct: "ADD" | "DEDUCT";
   type: "PERCENTAGE" | "FIXED_VALUE";
@@ -124,8 +108,6 @@ export type CreateInvoiceExtension = {
 };
 
 export type CreateInvoiceItem = {
-  // Confirmed required by the live API (400s with "itemReference must not
-  // be blank" otherwise) — not obvious from the sample alone.
   itemReference: string;
   itemName: string;
   description?: string;
@@ -144,12 +126,9 @@ export type CreateInvoiceRequest = {
   description?: string;
   extensions?: CreateInvoiceExtension[];
   customer: CreateInvoiceCustomer;
-  // Spec requires exactly one line item per invoice.
   items: [CreateInvoiceItem];
 };
 
-// The API accepts a batch (`invoices: [...]`) — this app only ever sends
-// a single invoice per submission.
 export type CreateInvoicesPayload = {
   invoices: [CreateInvoiceRequest];
 };

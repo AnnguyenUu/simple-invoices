@@ -20,8 +20,6 @@ export function Pagination({
   disableNext: boolean;
   onChange: (page: number) => void;
 }) {
-  // Local text so the field can hold an in-progress/invalid value (e.g.
-  // empty, or "0") while typing, without immediately clamping mid-edit.
   const [draft, setDraft] = useState(String(pageNum));
 
   useEffect(() => {

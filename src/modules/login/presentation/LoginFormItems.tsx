@@ -2,9 +2,9 @@ import { memo } from "react";
 
 import * as Form from "@radix-ui/react-form";
 import { Button, Callout, Flex, Text, TextField } from "@radix-ui/themes";
-import { InputPassword } from "@/libs/input-password";
 import { LoginState } from "../repository/login";
 import { FieldErrors, UseFormRegister } from "react-hook-form";
+import { InputPassword } from "@/libs/ui/input-password";
 
 interface Props {
   loading: boolean;
