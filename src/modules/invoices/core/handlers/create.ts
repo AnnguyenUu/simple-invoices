@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createInvoice } from "../../repository";
-import { invoiceQueryKeys } from "@/context/query-keys/invoice";
+import { invoiceQueryKeys } from "../../configuration/constraints";
 
 export function useCreateInvoice() {
   const queryClient = useQueryClient();

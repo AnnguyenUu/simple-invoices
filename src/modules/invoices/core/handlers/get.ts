@@ -1,7 +1,7 @@
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { fetchInvoices } from "../../repository";
-import { invoiceQueryKeys } from "@/context/query-keys/invoice";
 import type { InvoiceListParams } from "@/types/invoice";
+import { invoiceQueryKeys } from "../../configuration/constraints";
 
 export function useGetInvoices(params: InvoiceListParams) {
   const query = useQuery({
