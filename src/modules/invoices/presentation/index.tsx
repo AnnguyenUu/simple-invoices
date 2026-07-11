@@ -135,9 +135,7 @@ const Invoices = ({
 
   if (isLoading) {
     return (
-      <Flex align="center" justify="center" py="8">
-        <Spinner size="3" />
-      </Flex>
+      <InvoiceLoading />
     );
   }
   return (
