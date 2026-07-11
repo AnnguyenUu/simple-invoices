@@ -46,13 +46,6 @@ async function fetchToken(
   }
 }
 
-// Called from login() only — a Server Action, where cookies().set() is
-// actually allowed to reach the browser. Fetching this via a self-fetch to
-// /api/users/me from (protected)/layout.tsx instead would run the Route
-// Handler's cookies().set(ORG_COOKIE, ...) inside that internal request's
-// own (discarded) response, never the real one — confirmed by reproducing
-// it end-to-end: after a real login, /api/invoices 401'd because
-// _uctx_ort was never actually in the browser's cookie jar.
 async function fetchOrgToken(accessToken: string): Promise<string | null> {
   try {
     const { data: user } = await new RequestBuilder<UserResponse>()

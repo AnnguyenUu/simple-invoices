@@ -23,7 +23,6 @@ type ValidatedName<TName extends string> = TName extends ''
         : `Error: Name must be in PascalCase (e.g., 'User', 'UserProfile').`
       : TName;
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type OneArgFn = ((props: any) => any) | (() => any);
 
 type IsOptional<T> = undefined extends T ? true : false;

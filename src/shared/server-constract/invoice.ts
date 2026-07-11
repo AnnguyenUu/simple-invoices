@@ -8,8 +8,6 @@ const numericStringIfPresent = (message: string) =>
     .optional()
     .refine((value) => !value || !Number.isNaN(Number(value)), message);
 
-// Format-checks a required date string: must match YYYY-MM-DD and be a
-// real calendar date (the regex alone would still accept e.g. 2026-13-45).
 const dateField = (label: string) =>
   z
     .string()
@@ -19,12 +17,7 @@ const dateField = (label: string) =>
       (value) => !Number.isNaN(new Date(value).getTime()),
       "Enter a valid date."
     );
-
-// Validation for the create-invoice form. Field-by-field this mirrors
-// CreateInvoiceForm's six sections; three cross-field .refine()s below
-// encode constraints the live API enforces but the sample payload in
-// src/hooks/create_invice.md doesn't make obvious (dueDate ordering,
-// bankId, and tax/discount value bounds).
+    
 export const createInvoiceSchema = z
   .object({
     invoiceNumber: z.string().min(1, "Invoice number is required."),
@@ -37,10 +30,6 @@ export const createInvoiceSchema = z
     dueDate: dateField("Due date"),
     description: z.string().optional(),
 
-    // Bank account — every field optional; the section as a whole is
-    // omitted from the payload unless at least one is filled in (see
-    // useCreateInvoiceForm.ts). bankId is conditionally required — see
-    // the cross-field refine below.
     bankAccountName: z.string().optional(),
     bankAccountNumber: z
       .string()
@@ -66,7 +55,6 @@ export const createInvoiceSchema = z
         "Enter a valid mobile number (7-15 digits, optional leading +)."
       ),
 
-    // Billing address — same all-optional-section pattern as bank account.
     addressPremise: z.string().optional(),
     addressCity: z.string().optional(),
     addressCounty: z.string().optional(),
@@ -79,17 +67,10 @@ export const createInvoiceSchema = z
         "Country code must be a 2-letter code (e.g. VN)."
       ),
 
-    // Confirmed required by the live API (400s with "itemReference must
-    // not be blank" otherwise) — not obvious from the sample alone.
     itemReference: z.string().min(1, "Item reference is required."),
     itemName: z.string().min(1, "Item name is required."),
     itemDescription: z.string().optional(),
     itemUOM: z.string().optional(),
-    // Kept as strings (matching what a text input actually holds) rather
-    // than z.coerce.number() — mixing a coerced field into a react-hook-form
-    // + zodResolver form requires threading separate input/output generics
-    // through useForm, which isn't worth it for two fields. Converted to
-    // real numbers in useCreateInvoiceForm's onSubmit instead.
     quantity: z
       .string()
       .min(1, "Quantity is required.")
@@ -99,8 +80,6 @@ export const createInvoiceSchema = z
       .min(1, "Rate is required.")
       .refine((value) => Number(value) >= 0, "Rate can't be negative."),
 
-    // Tax/discount — each an optional ADD/DEDUCT extension entry, sent
-    // only when its value is filled in (see useCreateInvoiceForm.ts).
     taxType: z.enum(["PERCENTAGE", "FIXED_VALUE"]).optional(),
     taxValue: numericStringIfPresent("Tax value must be a number."),
     discountType: z.enum(["PERCENTAGE", "FIXED_VALUE"]).optional(),
@@ -110,8 +89,6 @@ export const createInvoiceSchema = z
     message: "Due date must be on or after the invoice date.",
     path: ["dueDate"],
   })
-  // Confirmed by the live API: whenever bankAccount is sent at all, bankId
-  // must be non-empty — the sample payload's `"bankId": ""` is misleading.
   .refine(
     (data) => {
       const anyBankField =

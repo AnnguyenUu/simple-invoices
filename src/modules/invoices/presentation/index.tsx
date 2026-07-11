@@ -147,9 +147,6 @@ const Invoices = ({
             opacity: isFetching ? 0.6 : 1,
             pointerEvents: isFetching ? "none" : undefined,
             transition: "filter 150ms ease, opacity 150ms ease",
-            // Five columns don't fit a phone width — scroll the table
-            // itself horizontally rather than letting it blow out the
-            // page or squeeze illegibly narrow.
             overflowX: "auto",
           }}
         >

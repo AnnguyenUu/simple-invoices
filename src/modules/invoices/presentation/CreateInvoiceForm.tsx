@@ -13,8 +13,6 @@ import { BillingAddressSection } from "./CreateInvoiceBillingAddressSection";
 import { BankAccountSection } from "./CreateInvoiceBankAccountSection";
 import { TaxDiscountSection } from "./CreateInvoiceTaxDiscountSection";
 
-// Roughly the fixed footer's rendered height (padding + button + border) —
-// reserved as bottom spacing so the footer doesn't cover the last field.
 const DESKTOP_FOOTER_SPACER = "96px";
 
 export function CreateInvoiceForm() {
@@ -33,9 +31,6 @@ export function CreateInvoiceForm() {
         size="4"
         style={{
           width: "100%",
-          // Room for the fixed footer below so it doesn't cover the last
-          // field when scrolled to the bottom — not needed on mobile,
-          // which has no fixed footer.
           paddingBottom: isMobile ? undefined : DESKTOP_FOOTER_SPACER,
         }}
       >

@@ -22,13 +22,7 @@ export default async function ProtectedLayout({
   if (!session) {
     redirect(LOGIN_URL);
   }
-
-  // Prefetches the user profile server-side and hands it to the client via
-  // hydration, so ProtectedHeader's useGetUserProfile() (a client-side
-  // React Query hook) renders with data immediately instead of a loading
-  // flash. This does NOT set the org cookie reliably — see
-  // fetchUserProfileServer's and login()'s comments for why that's handled
-  // separately, at login time.
+  
   const queryClient = getQueryClient();
   await queryClient.prefetchQuery({
     queryKey: userQueryKeys.me,

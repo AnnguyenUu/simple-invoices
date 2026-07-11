@@ -4,17 +4,9 @@ import { ErrorRequest } from "./error-request";
 
 export type HttpMethod = "get" | "post" | "put" | "patch" | "delete";
 
-// Chainable wrapper around apiClient: new RequestBuilder<T>()
-//   .withMethod("post").withUrl("/invoices").withData(payload).send()
-// This is the one way every fetch in this app is made — see error-request.ts
-// for the 401-redirect behavior baked into .send() via ErrorRequest.
 export class RequestBuilder<T = unknown> extends ErrorRequest {
   private config: AxiosRequestConfig = {};
   private redirectOn401 = true;
-
-  // Opt out of the default 401 -> redirect("/login") behavior. Needed by
-  // callers that back a fetch/axios call from client code rather than a
-  // page render (see error-request.ts's handleError for the full reasoning).
   withRedirectOn401(enabled: boolean): this {
     this.redirectOn401 = enabled;
     return this;
