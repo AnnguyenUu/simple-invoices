@@ -1,8 +1,19 @@
 "use client";
 
 import { Theme } from "@radix-ui/themes";
+import {
+  QueryClient,
+  QueryClientProvider,
+} from "@tanstack/react-query";
 import { ThemeProvider as NextThemesProvider, useTheme } from "next-themes";
 import { useEffect, useState, type ReactNode } from "react";
+
+// One QueryClient per browser tab/session, not per render — useState's
+// initializer runs once on mount and is stable across re-renders.
+function useQueryClientSingleton() {
+  const [queryClient] = useState(() => new QueryClient());
+  return queryClient;
+}
 
 function RadixThemeSync({ children }: { children: ReactNode }) {
   const { resolvedTheme } = useTheme();
@@ -22,9 +33,13 @@ function RadixThemeSync({ children }: { children: ReactNode }) {
 }
 
 export function Providers({ children }: { children: ReactNode }) {
+  const queryClient = useQueryClientSingleton();
+
   return (
-    <NextThemesProvider attribute="class" defaultTheme="system" enableSystem>
-      <RadixThemeSync>{children}</RadixThemeSync>
-    </NextThemesProvider>
+    <QueryClientProvider client={queryClient}>
+      <NextThemesProvider attribute="class" defaultTheme="system" enableSystem>
+        <RadixThemeSync>{children}</RadixThemeSync>
+      </NextThemesProvider>
+    </QueryClientProvider>
   );
 }

@@ -1,4 +1,3 @@
-export const ORG_COOKIE = "_uctx_ort"
 export const userQueryKeys = {
   me: ["user", "me"] as const,
 };

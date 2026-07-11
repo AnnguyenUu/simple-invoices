@@ -1,17 +1,23 @@
+"use client";
+
 import { ExitIcon, FileTextIcon, PlusIcon } from "@radix-ui/react-icons";
-import { Avatar, Box, Button, Flex, IconButton, Text } from "@radix-ui/themes";
+import {
+  Avatar,
+  Box,
+  Button,
+  DropdownMenu,
+  Flex,
+  Text,
+} from "@radix-ui/themes";
 import Link from "next/link";
 import { logout } from "@/api/auth/logout";
-
-const MOCK_USER_EMAIL = "user@example.com";
+import { useGetUserProfile } from "@/modules/users-profile/core/handlers/get";
 
 export function ProtectedHeader() {
+  const { userProfile } = useGetUserProfile();
+
   return (
-    <Box
-      px="6"
-      py="3"
-      style={{ borderBottom: "1px solid var(--gray-a5)" }}
-    >
+    <Box px="6" py="3" style={{ borderBottom: "1px solid var(--gray-a5)" }}>
       <Flex align="center" justify="between">
         <Flex align="center" gap="6">
           <Flex align="center" gap="2">
@@ -46,33 +52,36 @@ export function ProtectedHeader() {
             </Link>
           </Button>
 
-          <Flex
-            align="center"
-            gap="2"
-            px="2"
-            py="1"
-            style={{ border: "1px solid var(--gray-a5)", borderRadius: 6 }}
-          >
-            <Avatar
-              fallback={MOCK_USER_EMAIL[0].toUpperCase()}
-              size="1"
-              radius="full"
-            />
-            <Text size="2" color="gray">
-              {MOCK_USER_EMAIL}
-            </Text>
-          </Flex>
-
-          <form action={logout}>
-            <IconButton
-              type="submit"
-              variant="ghost"
-              color="gray"
-              aria-label="Sign out"
-            >
-              <ExitIcon />
-            </IconButton>
-          </form>
+          <DropdownMenu.Root>
+            <DropdownMenu.Trigger>
+              <Flex
+                align="center"
+                gap="2"
+                px="2"
+                py="1"
+                style={{ borderRadius: 6 }}
+              >
+                <Avatar
+                  fallback={userProfile?.nickName?.[0] || ""}
+                  size="1"
+                  radius="full"
+                />
+                <Text size="2" color="gray">
+                  {userProfile?.nickName}
+                </Text>
+              </Flex>
+            </DropdownMenu.Trigger>
+            <DropdownMenu.Content>
+              <DropdownMenu.Item
+                onClick={(ev) => {
+                  ev.stopPropagation();
+                  logout()
+                }}
+              >
+                Logout&nbsp;<ExitIcon />
+              </DropdownMenu.Item>
+            </DropdownMenu.Content>
+          </DropdownMenu.Root>
         </Flex>
       </Flex>
     </Box>
