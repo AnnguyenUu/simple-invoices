@@ -27,7 +27,7 @@ function LoginForm() {
   } = form;
 
   return (
-    <Card size="4" style={{ width: 380 }}>
+    <Card size="4" style={{ width: "100%", maxWidth: 380 }}>
       <Heading as="h1" size="5" mb="1">
         SIGN IN
       </Heading>
@@ -52,7 +52,8 @@ export default function LoginPresentation() {
     <Flex
       align="center"
       justify="center"
-      style={{ minHeight: "100vh", padding: "2rem" }}
+      p={{ initial: "4", sm: "6" }}
+      style={{ minHeight: "100vh" }}
     >
       <LoginForm />
     </Flex>

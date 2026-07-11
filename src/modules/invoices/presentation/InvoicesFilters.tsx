@@ -2,7 +2,7 @@
 
 import { ChangeEvent, startTransition, useEffect, useState } from "react";
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
-import { Flex, Select, TextField } from "@radix-ui/themes";
+import { Box, Flex, Select, TextField } from "@radix-ui/themes";
 import type { InvoiceStatus } from "@/types/invoice";
 import { PAGE_SIZE_OPTIONS, STATUS_FILTER_OPTIONS } from "./constants";
 import { useDebounceCallback } from "@/hooks/useDebounce";
@@ -38,16 +38,18 @@ export function InvoicesFilters({
 
   return (
     <Flex align="end" gap="3" wrap="wrap" mb="4">
-      <TextField.Root
-        placeholder="Search invoice #..."
-        value={keywordDraft}
-        onChange={onChangeTextField}
-        style={{ width: 220 }}
-      >
-        <TextField.Slot>
-          <MagnifyingGlassIcon />
-        </TextField.Slot>
-      </TextField.Root>
+      <Box width={{ initial: "100%", xs: "220px" }}>
+        <TextField.Root
+          placeholder="Search invoice #..."
+          value={keywordDraft}
+          onChange={onChangeTextField}
+          style={{ width: "100%" }}
+        >
+          <TextField.Slot>
+            <MagnifyingGlassIcon />
+          </TextField.Slot>
+        </TextField.Root>
+      </Box>
 
       <Select.Root
         value={value.status}
@@ -65,20 +67,24 @@ export function InvoicesFilters({
         </Select.Content>
       </Select.Root>
 
-      <TextField.Root
-        type="date"
-        value={value.fromDate}
-        max={value.toDate || undefined}
-        onChange={(e) => onChange({ ...value, fromDate: e.target.value })}
-        style={{ width: 160 }}
-      />
-      <TextField.Root
-        type="date"
-        value={value.toDate}
-        min={value.fromDate || undefined}
-        onChange={(e) => onChange({ ...value, toDate: e.target.value })}
-        style={{ width: 160 }}
-      />
+      <Box width={{ initial: "calc(50% - 6px)", xs: "160px" }}>
+        <TextField.Root
+          type="date"
+          value={value.fromDate}
+          max={value.toDate || undefined}
+          onChange={(e) => onChange({ ...value, fromDate: e.target.value })}
+          style={{ width: "100%" }}
+        />
+      </Box>
+      <Box width={{ initial: "calc(50% - 6px)", xs: "160px" }}>
+        <TextField.Root
+          type="date"
+          value={value.toDate}
+          min={value.fromDate || undefined}
+          onChange={(e) => onChange({ ...value, toDate: e.target.value })}
+          style={{ width: "100%" }}
+        />
+      </Box>
 
       <Select.Root
         value={String(value.pageSize)}

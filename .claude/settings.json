@@ -70,7 +70,21 @@
       "Bash(node create-invoice-full.mjs)",
       "Bash(sed -i.bak2 '/bankId.*test-bank-id/d' create-invoice-full.mjs)",
       "Bash(node verify-validation.mjs)",
-      "Bash(node verify-valid.mjs)"
+      "Bash(node verify-valid.mjs)",
+      "Bash(node responsive-test.mjs)",
+      "Bash(node mobile-table.mjs)",
+      "Bash(node test-mobile-hook.mjs)",
+      "Bash(rm -rf \"/Users/annguyenuu/Documents/invoice/src/app/\\(protected\\)/scratch-mobile-hook-test\")",
+      "Bash(rm -f /private/tmp/claude-501/-Users-annguyenuu-Documents-invoice/b0bd499f-54a6-40e6-aee2-bd16ee57d403/scratchpad/test-mobile-hook.mjs)",
+      "Bash(rm -f /tmp/invoice-dev-3001.log)",
+      "Bash(node test-device-context.mjs)",
+      "Bash(rm -rf \"/Users/annguyenuu/Documents/invoice/src/app/\\(protected\\)/scratch-device-context-test\")",
+      "Bash(rm -f /private/tmp/claude-501/-Users-annguyenuu-Documents-invoice/b0bd499f-54a6-40e6-aee2-bd16ee57d403/scratchpad/test-device-context.mjs)",
+      "Bash(node verify-footer.mjs)",
+      "Bash(node verify-footer2.mjs)",
+      "Bash(node verify-split-form.mjs)",
+      "Bash(node smoke-test.mjs)",
+      "Bash(node smoke-debug.mjs)"
     ],
     "additionalDirectories": [
       "/tmp"

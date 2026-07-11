@@ -17,9 +17,13 @@ export function ProtectedHeader() {
   const { userProfile } = useGetUserProfile();
 
   return (
-    <Box px="6" py="3" style={{ borderBottom: "1px solid var(--gray-a5)" }}>
-      <Flex align="center" justify="between">
-        <Flex align="center" gap="6">
+    <Box
+      px={{ initial: "4", sm: "6" }}
+      py="3"
+      style={{ borderBottom: "1px solid var(--gray-a5)" }}
+    >
+      <Flex align="center" justify="between" wrap="wrap" gap="3">
+        <Flex align="center" gap={{ initial: "3", sm: "6" }} wrap="wrap">
           <Flex align="center" gap="2">
             <Flex
               align="center"
@@ -39,16 +43,23 @@ export function ProtectedHeader() {
             <Button variant="soft" size="2" asChild>
               <Link href="/">Invoices</Link>
             </Button>
-            <Button variant="ghost" color="gray" size="2" asChild>
-              <Link href="/invoices/new">New Invoice</Link>
-            </Button>
+            {/* Redundant with the primary CTA on the right once that's
+                visible — hidden below sm to save space on narrow screens. */}
+            <Box display={{ initial: "none", sm: "inline-block" }}>
+              <Button variant="ghost" color="gray" size="2" asChild>
+                <Link href="/invoices/new">New Invoice</Link>
+              </Button>
+            </Box>
           </Flex>
         </Flex>
 
-        <Flex align="center" gap="4">
+        <Flex align="center" gap={{ initial: "2", sm: "4" }}>
           <Button size="2" asChild>
             <Link href="/invoices/new">
-              <PlusIcon /> New Invoice
+              <PlusIcon />
+              <Box display={{ initial: "none", xs: "inline" }} asChild>
+                <span>New Invoice</span>
+              </Box>
             </Link>
           </Button>
 
@@ -66,9 +77,11 @@ export function ProtectedHeader() {
                   size="1"
                   radius="full"
                 />
-                <Text size="2" color="gray">
-                  {userProfile?.nickName}
-                </Text>
+                <Box display={{ initial: "none", sm: "inline-block" }}>
+                  <Text size="2" color="gray">
+                    {userProfile?.nickName}
+                  </Text>
+                </Box>
               </Flex>
             </DropdownMenu.Trigger>
             <DropdownMenu.Content>

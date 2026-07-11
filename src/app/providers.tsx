@@ -7,6 +7,7 @@ import {
 } from "@tanstack/react-query";
 import { ThemeProvider as NextThemesProvider, useTheme } from "next-themes";
 import { useEffect, useState, type ReactNode } from "react";
+import { DeviceProvider } from "@/context/device";
 
 function useQueryClientSingleton() {
   const [queryClient] = useState(() => new QueryClient());
@@ -31,7 +32,9 @@ export function Providers({ children }: { children: ReactNode }) {
   return (
     <QueryClientProvider client={queryClient}>
       <NextThemesProvider attribute="class" defaultTheme="system" enableSystem>
-        <RadixThemeSync>{children}</RadixThemeSync>
+        <RadixThemeSync>
+          <DeviceProvider>{children}</DeviceProvider>
+        </RadixThemeSync>
       </NextThemesProvider>
     </QueryClientProvider>
   );

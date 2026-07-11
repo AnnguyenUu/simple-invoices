@@ -147,6 +147,10 @@ const Invoices = ({
             opacity: isFetching ? 0.6 : 1,
             pointerEvents: isFetching ? "none" : undefined,
             transition: "filter 150ms ease, opacity 150ms ease",
+            // Five columns don't fit a phone width — scroll the table
+            // itself horizontally rather than letting it blow out the
+            // page or squeeze illegibly narrow.
+            overflowX: "auto",
           }}
         >
           <Table.Root variant="surface">
@@ -170,7 +174,13 @@ const Invoices = ({
         )}
       </Box>
 
-      <Flex align="center" justify="between" mt="4">
+      <Flex
+        align={{ initial: "start", sm: "center" }}
+        justify="between"
+        direction={{ initial: "column", sm: "row" }}
+        gap="3"
+        mt="4"
+      >
         <Text size="2" color="gray">
           {totalRecords} invoice{totalRecords === 1 ? "" : "s"}
         </Text>

@@ -52,6 +52,7 @@ export type UserRole = {
   entityId: string;
 };
 
+// Verified against a real GET /membership-service/1.0.0/users/me response.
 export type User = {
   userId: string;
   userName: string;
