@@ -1,6 +1,7 @@
 "use client";
 
-import { Dispatch, SetStateAction, useState } from "react";
+import { useState } from "react";
+import dynamic from "next/dynamic";
 import { InfoCircledIcon } from "@radix-ui/react-icons";
 import { Box, Callout, Flex, Spinner, Table, Text } from "@radix-ui/themes";
 import { useGetInvoices } from "@/modules/invoices/core/handlers/get";
@@ -11,9 +12,14 @@ import type {
 } from "@/types/invoice";
 import { DEFAULT_PAGE_SIZE } from "./constants";
 import { InvoicesFilters, type InvoiceFiltersValue } from "./InvoicesFilters";
-import { InvoicesTableHeader } from "./InvoicesTableHeader";
-import { InvoicesTableBody } from "./InvoicesTableBody";
 import { Pagination } from "./Pagination";
+
+const InvoicesTableHeader = dynamic(() =>
+  import("./InvoicesTableHeader").then((mod) => mod.InvoicesTableHeader),
+);
+const InvoicesTableBody = dynamic(() =>
+  import("./InvoicesTableBody").then((mod) => mod.InvoicesTableBody),
+);
 
 const DEFAULT_FILTERS: InvoiceFiltersValue = {
   keyword: "",

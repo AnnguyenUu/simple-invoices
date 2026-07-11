@@ -84,7 +84,13 @@
       "Bash(node verify-footer2.mjs)",
       "Bash(node verify-split-form.mjs)",
       "Bash(node smoke-test.mjs)",
-      "Bash(node smoke-debug.mjs)"
+      "Bash(node smoke-debug.mjs)",
+      "Bash(NODE_PATH=/Users/annguyenuu/.npm/_npx/361ceb562f3b3235/node_modules node /private/tmp/claude-501/-Users-annguyenuu-Documents-invoice/aa24a3be-d774-497c-91db-1fb469c454b0/scratchpad/screenshot.mjs)",
+      "Bash(cp /private/tmp/claude-501/-Users-annguyenuu-Documents-invoice/aa24a3be-d774-497c-91db-1fb469c454b0/scratchpad/screenshot.mjs /Users/annguyenuu/.npm/_npx/361ceb562f3b3235/screenshot.mjs)",
+      "Bash(node /Users/annguyenuu/.npm/_npx/361ceb562f3b3235/screenshot.mjs)",
+      "Bash(node /Users/annguyenuu/.npm/_npx/361ceb562f3b3235/screenshot4.mjs)",
+      "Bash(node /Users/annguyenuu/.npm/_npx/361ceb562f3b3235/screenshot2.mjs)",
+      "Bash(pkill -f \"next dev --turbopack -p 3411\")"
     ],
     "additionalDirectories": [
       "/tmp"

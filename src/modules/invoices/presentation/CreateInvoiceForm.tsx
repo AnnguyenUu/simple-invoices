@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import * as Form from "@radix-ui/react-form";
 import { CheckCircledIcon, InfoCircledIcon } from "@radix-ui/react-icons";
 import { Box, Button, Callout, Card, Flex } from "@radix-ui/themes";
@@ -8,10 +9,32 @@ import { useCreateInvoiceForm } from "@/modules/invoices/core/handlers/useCreate
 import { useDeviceContext } from "@/context/device";
 import { InvoiceDetailsSection } from "./CreateInvoiceDetailsSection";
 import { CustomerSection } from "./CreateInvoiceCustomerSection";
-import { ItemSection } from "./CreateInvoiceItemSection";
-import { BillingAddressSection } from "./CreateInvoiceBillingAddressSection";
-import { BankAccountSection } from "./CreateInvoiceBankAccountSection";
-import { TaxDiscountSection } from "./CreateInvoiceTaxDiscountSection";
+
+const ItemSection = dynamic(
+  () => import("./CreateInvoiceItemSection").then((mod) => mod.ItemSection),
+  { ssr: false },
+);
+const BillingAddressSection = dynamic(
+  () =>
+    import("./CreateInvoiceBillingAddressSection").then(
+      (mod) => mod.BillingAddressSection,
+    ),
+  { ssr: false },
+);
+const BankAccountSection = dynamic(
+  () =>
+    import("./CreateInvoiceBankAccountSection").then(
+      (mod) => mod.BankAccountSection,
+    ),
+  { ssr: false },
+);
+const TaxDiscountSection = dynamic(
+  () =>
+    import("./CreateInvoiceTaxDiscountSection").then(
+      (mod) => mod.TaxDiscountSection,
+    ),
+  { ssr: false },
+);
 
 const DESKTOP_FOOTER_SPACER = "96px";
 
