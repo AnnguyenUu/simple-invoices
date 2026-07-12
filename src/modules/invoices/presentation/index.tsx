@@ -62,6 +62,7 @@ const Invoices = () => {
   if (facade.isLoading) {
     return <InvoiceLoading />;
   }
+  
   return (
     <>
       <Box style={{ position: "relative" }}>
