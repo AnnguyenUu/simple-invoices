@@ -72,7 +72,15 @@ export function InvoicesFilters({
           type="date"
           value={value.fromDate}
           max={value.toDate || undefined}
-          onChange={(e) => onChange({ ...value, fromDate: e.target.value })}
+          onChange={(e) => {
+            const fromDate = e.target.value;
+            if (value.toDate && fromDate > value.toDate) return;
+            onChange({
+              ...value,
+              fromDate,
+              toDate: fromDate ? value.toDate : "",
+            });
+          }}
           style={{ width: "100%" }}
         />
       </Box>
@@ -81,7 +89,12 @@ export function InvoicesFilters({
           type="date"
           value={value.toDate}
           min={value.fromDate || undefined}
-          onChange={(e) => onChange({ ...value, toDate: e.target.value })}
+          disabled={!value.fromDate}
+          onChange={(e) => {
+            const toDate = e.target.value;
+            if (value.fromDate && toDate < value.fromDate) return;
+            onChange({ ...value, toDate });
+          }}
           style={{ width: "100%" }}
         />
       </Box>
