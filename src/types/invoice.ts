@@ -1,3 +1,5 @@
+import { AxiosResponseListType } from "./responseType";
+
 export type InvoiceParty = {
   id: string;
   name?: string;
@@ -43,14 +45,7 @@ export type Invoice = {
   customFields: InvoiceCustomField[];
 };
 
-export type InvoiceListResponse = {
-  data: Invoice[];
-  paging: {
-    pageNumber: number;
-    pageSize: number;
-    totalRecords: number;
-  };
-};
+export type InvoiceListResponse = AxiosResponseListType<Invoice>
 
 export type InvoiceSortField =
   | "CREATED_DATE"

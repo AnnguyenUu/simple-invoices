@@ -4,6 +4,7 @@ import type {
   InvoiceListParams,
   InvoiceListResponse,
 } from "@/types/invoice";
+import { INVOICE_URL } from "../configuration/constraints";
 
 function compact(params: InvoiceListParams): Record<string, unknown> {
   return Object.fromEntries(
@@ -17,7 +18,7 @@ export function fetchInvoices(
   return new RequestBuilder<InvoiceListResponse>()
     .withRedirectOn401(false)
     .withMethod("get")
-    .withUrl("/invoices")
+    .withUrl(INVOICE_URL.REQUEST)
     .withParams(compact(params))
     .send();
 }
@@ -26,7 +27,7 @@ export function createInvoice(invoice: CreateInvoiceRequest): Promise<unknown> {
   return new RequestBuilder<unknown>()
     .withRedirectOn401(false)
     .withMethod("post")
-    .withUrl("/invoices")
+    .withUrl(INVOICE_URL.REQUEST)
     .withData({ invoices: [invoice] })
     .send();
 }

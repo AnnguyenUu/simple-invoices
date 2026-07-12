@@ -7,3 +7,6 @@ export const invoiceQueryKeys = {
 
 
 export const FEATURE_NAME = "INVOICES"
+export const INVOICE_URL = {
+  REQUEST: "/invoices"
+}
