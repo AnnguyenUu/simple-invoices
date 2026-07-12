@@ -62,7 +62,7 @@ const Invoices = () => {
   if (facade.isLoading) {
     return <InvoiceLoading />;
   }
-  
+
   return (
     <>
       <Box style={{ position: "relative" }}>
@@ -103,7 +103,7 @@ const Invoices = () => {
         mt="4"
       >
         <Text size="2" color="gray">
-          {facade.totalRecords} invoice{facade.totalRecords === 1 ? "" : "s"}
+          {`${facade.totalRecords} ${pluralized("invoice", facade.totalRecords)}`} 
         </Text>
 
         <Pagination
@@ -116,3 +116,10 @@ const Invoices = () => {
     </>
   );
 };
+
+const pluralized = (text: string, count: number) => {
+  if(count > 1) {
+    return `${text}s`
+  }
+  return text
+}
