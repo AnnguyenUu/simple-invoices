@@ -22,7 +22,7 @@ export function InvoicesFilters({
   value: InvoiceFiltersValue;
   onChange: (next: InvoiceFiltersValue) => void;
 }) {
-  const [keywordDraft, setKeywordDraft] = useState(value.keyword);
+  const [keywordDraft, setKeywordDraft] = useState(value?.keyword);
 
   const debounced = useDebounceCallback(onChange, 500);
   
@@ -52,7 +52,7 @@ export function InvoicesFilters({
       </Box>
 
       <Select.Root
-        value={value.status}
+        value={value?.status}
         onValueChange={(status) =>
           onChange({ ...value, status: status as InvoiceStatus | "ALL" })
         }

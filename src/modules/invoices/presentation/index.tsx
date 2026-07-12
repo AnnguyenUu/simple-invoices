@@ -1,105 +1,35 @@
 "use client";
 
-import { useState } from "react";
 import dynamic from "next/dynamic";
 import { InfoCircledIcon } from "@radix-ui/react-icons";
 import { Box, Callout, Flex, Spinner, Table, Text } from "@radix-ui/themes";
-import { useGetInvoices } from "@/modules/invoices/core/handlers/get";
-import type {
-  Invoice,
-  InvoiceOrdering,
-  InvoiceSortField,
-} from "@/types/invoice";
-import { DEFAULT_PAGE_SIZE } from "./constants";
-import { InvoicesFilters, type InvoiceFiltersValue } from "./InvoicesFilters";
-import { Pagination } from "./Pagination";
+import { InvoicesFilters } from "./InvoicesFilters";
+import { useInvoiceContext } from "../core/handlers/useInvoices";
 
 const InvoicesTableHeader = dynamic(() =>
   import("./InvoicesTableHeader").then((mod) => mod.InvoicesTableHeader),
 );
+
 const InvoicesTableBody = dynamic(() =>
   import("./InvoicesTableBody").then((mod) => mod.InvoicesTableBody),
 );
 
-const DEFAULT_FILTERS: InvoiceFiltersValue = {
-  keyword: "",
-  status: "ALL",
-  fromDate: "",
-  toDate: "",
-  pageSize: DEFAULT_PAGE_SIZE,
-};
+const Pagination = dynamic(() =>
+  import("./Pagination").then((mod) => mod.Pagination),
+);
 
 export function InvoicesTable() {
-  const [pageNum, setPageNum] = useState(1);
-  const [sortBy, setSortBy] = useState<InvoiceSortField>("CREATED_DATE");
-  const [ordering, setOrdering] = useState<InvoiceOrdering>("DESCENDING");
-  const [filters, setFilters] = useState<InvoiceFiltersValue>(DEFAULT_FILTERS);
-
-  const { invoices, data, isLoading, isFetching, isError, isPlaceholderData } =
-    useGetInvoices({
-      sortBy,
-      ordering,
-      pageNum,
-      pageSize: filters.pageSize,
-      keyword: filters.keyword || undefined,
-      fromDate: filters.fromDate || undefined,
-      toDate: filters.toDate || undefined,
-      status: filters.status === "ALL" ? undefined : filters.status,
-    });
-
-  const totalRecords = data?.paging.totalRecords ?? invoices.length;
-  const totalPages = Math.max(1, Math.ceil(totalRecords / filters.pageSize));
-
-  const toggleSort = (field: InvoiceSortField) => {
-    setPageNum(1);
-    if (field !== sortBy) {
-      setSortBy(field);
-      setOrdering("DESCENDING");
-      return;
-    }
-    setOrdering((prev) => (prev === "DESCENDING" ? "ASCENDING" : "DESCENDING"));
-  };
-
-  const handleFiltersChange = (next: InvoiceFiltersValue) => {
-    setPageNum(1);
-    setFilters(next);
-  };
+  const facade = useInvoiceContext();
 
   return (
     <Box>
-      <InvoicesFilters value={filters} onChange={handleFiltersChange} />
-
-      <Invoices
-        isError={isError}
-        isLoading={isLoading}
-        isFetching={isFetching}
-        sortBy={sortBy}
-        ordering={ordering}
-        toggleSort={toggleSort}
-        invoices={invoices || []}
-        totalRecords={totalRecords}
-        pageNum={pageNum}
-        totalPages={totalPages}
-        isPlaceholderData={isPlaceholderData}
-        onChange={setPageNum}
+      <InvoicesFilters
+        value={facade.filters}
+        onChange={facade.handleFiltersChange}
       />
+      <Invoices />
     </Box>
   );
-}
-
-interface InvoicesProps {
-  isError: boolean;
-  isLoading: boolean;
-  isFetching: boolean;
-  sortBy: InvoiceSortField;
-  ordering: InvoiceOrdering;
-  toggleSort: (field: InvoiceSortField) => void;
-  invoices: Invoice[];
-  totalRecords: number;
-  pageNum: number;
-  totalPages: number;
-  isPlaceholderData: boolean;
-  onChange: (page: number) => void;
 }
 
 const InvoiceError = () => {
@@ -121,52 +51,39 @@ const InvoiceLoading = () => {
   );
 };
 
-const Invoices = ({
-  isError,
-  isLoading,
-  isFetching,
-  sortBy,
-  ordering,
-  toggleSort,
-  invoices,
-  totalRecords,
-  onChange,
-  pageNum,
-  totalPages,
-  isPlaceholderData,
-}: InvoicesProps) => {
-  if (isError) {
+const Invoices = () => {
+  const facade = useInvoiceContext();
+
+  if (facade.isError) {
     return <InvoiceError />;
   }
 
-  if (isLoading) {
-    return (
-      <InvoiceLoading />
-    );
+  if (facade.isLoading) {
+    return <InvoiceLoading />;
   }
   return (
     <>
       <Box style={{ position: "relative" }}>
         <Box
           style={{
-            filter: isFetching ? "blur(2px)" : undefined,
-            opacity: isFetching ? 0.6 : 1,
-            pointerEvents: isFetching ? "none" : undefined,
+            filter: facade.isFetching ? "blur(2px)" : undefined,
+            opacity: facade.isFetching ? 0.6 : 1,
+            pointerEvents: facade.isFetching ? "none" : undefined,
             transition: "filter 150ms ease, opacity 150ms ease",
             overflowX: "auto",
           }}
         >
           <Table.Root variant="surface">
             <InvoicesTableHeader
-              sortBy={sortBy}
-              ordering={ordering}
-              onSort={toggleSort}
+              sortBy={facade.sortBy}
+              ordering={facade.ordering}
+              onSort={facade.toggleSort}
             />
-            <InvoicesTableBody invoices={invoices} />
+            <InvoicesTableBody invoices={facade.invoices} />
           </Table.Root>
         </Box>
 
-        {isFetching && (
+        {facade.isFetching && (
           <Flex
             align="center"
             justify="center"
@@ -185,14 +102,14 @@ const Invoices = ({
         mt="4"
       >
         <Text size="2" color="gray">
-          {totalRecords} invoice{totalRecords === 1 ? "" : "s"}
+          {facade.totalRecords} invoice{facade.totalRecords === 1 ? "" : "s"}
         </Text>
 
         <Pagination
-          pageNum={pageNum}
-          totalPages={totalPages}
-          disableNext={isPlaceholderData}
-          onChange={onChange}
+          pageNum={facade.pageNum}
+          totalPages={facade.totalPages}
+          disableNext={facade.isPlaceholderData}
+          onChange={facade.setPageNum}
         />
       </Flex>
     </>
