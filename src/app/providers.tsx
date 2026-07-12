@@ -8,6 +8,7 @@ import {
 import { ThemeProvider as NextThemesProvider, useTheme } from "next-themes";
 import { useEffect, useState, type ReactNode } from "react";
 import { DeviceProvider } from "@/context/device";
+import { ErrorBoundary } from "@/libs/ui/ErrorBoundary";
 
 function useQueryClientSingleton() {
   const [queryClient] = useState(() => new QueryClient());
@@ -33,7 +34,9 @@ export function Providers({ children }: { children: ReactNode }) {
     <QueryClientProvider client={queryClient}>
       <NextThemesProvider attribute="class" defaultTheme="system" enableSystem>
         <RadixThemeSync>
-          <DeviceProvider>{children}</DeviceProvider>
+          <DeviceProvider>
+            <ErrorBoundary>{children}</ErrorBoundary>
+          </DeviceProvider>
         </RadixThemeSync>
       </NextThemesProvider>
     </QueryClientProvider>
