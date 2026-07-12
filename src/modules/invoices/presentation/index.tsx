@@ -1,6 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import clsx from "clsx";
 import { InfoCircledIcon } from "@radix-ui/react-icons";
 import { Box, Callout, Flex, Spinner, Table, Text } from "@radix-ui/themes";
 import { InvoicesFilters } from "./InvoicesFilters";
@@ -65,13 +66,12 @@ const Invoices = () => {
     <>
       <Box style={{ position: "relative" }}>
         <Box
-          style={{
-            filter: facade.isFetching ? "blur(2px)" : undefined,
-            opacity: facade.isFetching ? 0.6 : 1,
-            pointerEvents: facade.isFetching ? "none" : undefined,
-            transition: "filter 150ms ease, opacity 150ms ease",
-            overflowX: "auto",
-          }}
+          className={clsx(
+            "overflow-x-auto transition-[filter,opacity] duration-150 ease-in-out",
+            facade.isFetching
+              ? "pointer-events-none opacity-60 blur-[2px]"
+              : "opacity-100",
+          )}
         >
           <Table.Root variant="surface">
             <InvoicesTableHeader
