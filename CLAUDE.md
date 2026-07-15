@@ -12,9 +12,14 @@ Next.js 15 (App Router) invoice app, bootstrapped with `create-next-app`. TypeSc
 - `npm run build` — production build (Turbopack)
 - `npm run start` — run the production build
 - `npm run lint` — ESLint (flat config: `next/core-web-vitals` + `next/typescript`)
-- `npx tsc --noEmit` — typecheck only (no test runner is configured yet)
+- `npx tsc --noEmit` — typecheck only
+- `npm run test` — run the full Vitest suite once (`vitest run`)
+- `npm run test:watch` — Vitest in watch mode
+- `npx vitest run path/to/file.test.ts` — run a single test file; add `-t "test name"` to filter to one test
 
-There is no test framework wired up yet — add one (and its single-test invocation) here once introduced.
+Vitest (`vitest.config.ts`, `jsdom` environment) + React Testing Library, mirroring the `tsconfig.json` path aliases (`@/*`, `@api/*`, `@modules/*`). Tests live in `__tests__/` folders next to the code they cover. Scope so far is unit/integration-level: Zod schemas, the `login` server action, `RequestBuilder`/`ErrorRequest`/`proxyToNeobank` (401-redirect and upstream-proxy infra), invoice/user-profile repositories and React Query hooks, the `/api/invoices` and `/api/users/me` route handlers, and the `(protected)` layout's session-redirect logic. Presentational components are not covered yet.
+
+For code under test that constructs `new RequestBuilder()`, mock the module with a real `class` (not `vi.fn().mockImplementation(() => ({...}))`) since the source calls it with `new`; `src/test/mock-request-builder.ts` has a reusable factory for the common case. `vi.mock()` paths resolve relative to the test file, not the file under test — double-check the relative depth when a test lives in a `__tests__/` subfolder.
 
 ## Version pinning
 
